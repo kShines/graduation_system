@@ -1,0 +1,52 @@
+
+
+body {
+    width:100%;
+	height: 100%;
+    background-image: url(background.jpeg);
+}
+
+
+
+
+.my-box {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: inline-block;
+}
+
+.content {
+    margin-top: 200px;
+}
+
+
+.login {
+    width: 260px;
+    
+    padding: 20px;
+    background-color: #1e9fff5e;;
+    border-radius: 4px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -150px 0 0 -150px;
+    z-index: 99;
+}
+
+.login h1 {
+    text-align: center;
+    color: #fff;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.layui-form-radio>i:hover, .layui-form-radioed>i {
+    color: #fbfbfb;
+}
+
+.layui-form-radio * {
+    font-size: 14px;
+    color: white;
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>登陆</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="ok-admin/css/oksub.css" media="all" />
+    <link rel="stylesheet" href="index.css">
+    <script src="./ok-admin/lib/layui/layui.js"></script>
+</head>
+
+<body>
+    <div class="my-box">
+        <div style="margin-left:10%;margin-right:10%;">
+            <form class="layui-form login">
+                <h1>萧山区企事业人员平时考核系统</h1>
+
+                <div class="layui-form-item">
+                    <input class="layui-input" name="username" id="username" placeholder="用户名" lay-verify="required" type="text"
+                        id="username" autocomplete="off">
+                </div>
+                <div class="layui-form-item">
+                    <input class="layui-input" name="password" id="password" placeholder="密码" lay-verify="required"
+                        type="password" autocomplete="off">
+                </div>
+                <div class="layui-form-item" style="right: auto;" id="isAdmin">
+                    <input type="radio" lay-filter="isadmin" name="is_admin" value=0 title="普通用户" checked>
+                    <input type="radio" lay-filter="isadmin" name="is_admin" value=1 title="管理员" >
+                </div>
+                <button type="submit" class="layui-btn login_btn layui-btn-normal" style="width: 100%;" lay-submit lay-filter="login">登录</button>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+
+
+<script>
+    layui.use(["table", "element", "form", "laydate", "upload"], function () {
+        var form = layui.form
+            , table = layui.table
+            , element = layui.element
+            , laydate = layui.laydate
+            , util = layui.util
+            , $ = layui.jquery
+            , layer = layui.layer
+            , classId = 1;
+        
+        var storage = window.localStorage;
+
+        form.on('submit(login)', function(data){
+            console.log(data.field);
+            var is_admin = data.field.is_admin;
+            $.ajax({
+                url: 'http://localhost:8090/api/login',
+                method: 'POST',
+                crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data.field),
+                success: function(data) {
+                    console.log(data.header.message)
+                    if(data.body.state == 1){
+                        console.log("1");
+                        storage.setItem('user_id', data.body.user_id);
+                        storage.setItem('organization_name', data.body.organization_name);
+                        storage.setItem('name', data.body.name);
+                        console.log(data.body.user_id)
+                        if(is_admin == 0){
+                            window.location.href = "./common/index.html";
+                        } else {
+                            window.location.href = "./management/index.html";
+                        }
+                        
+                        return false;
+                    } else {
+                        console.log(2);
+                        layer.open({
+                            title: "登录失败",
+                            content: data.header.message
+                        });
+                        return false;
+                    }
+                }
+            })
+            return false;
+        });
+        
+
+    })
+</script> 

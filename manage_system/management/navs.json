@@ -1,0 +1,67 @@
+[
+  {
+    "title": "人员结构管理",
+    "href": "",
+    "icon": "&#xe674;",
+    "spread": false,
+    "children": [
+      {
+        "title": "单位机构管理",
+        "href": "setting/organization_setting.html",
+        "icon": "&#xe62e;",
+        "spread": false
+      },
+      {
+        "title": "考核分组管理",
+        "href": "setting/assess_group_setting.html",
+        "icon": "&#xe62e;",
+        "spread": false
+      },
+      {
+        "title": "人员信息管理",
+        "href": "setting/user_info_manage.html",
+        "icon": "&#xe62e;",
+        "spread": false
+      },
+      {
+        "title": "单位考核批次",
+        "href": "setting/assess_batch_setting.html",
+        "icon": "&#xe62e;",
+        "spread": false
+      }
+    ]
+  },
+  {
+    "title": "考核数据监控",
+    "href": "",
+    "icon": "&#xe705;",
+    "spread": false,
+    "children": [
+      {
+        "title": "个人计划管理",
+        "href": "monitor/planManage.html",
+        "icon": "&#xe62e;",
+        "spread": false
+      },
+      {
+        "title": "个人总结管理",
+        "href": "monitor/sumManage.html",
+        "icon": "&#xe62e;",
+        "spread": false
+      },
+      {
+        "title": "个人晒绩管理",
+        "href": "monitor/achieveManage.html",
+        "icon": "&#xe62e;",
+        "spread": false
+      },
+      {
+        "title": "个人考核管理",
+        "href": "monitor/assessManage.html",
+        "icon": "&#xe62e;",
+        "spread": false
+      }
+
+    ]
+  }
+]

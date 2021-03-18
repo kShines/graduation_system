@@ -1,0 +1,94 @@
+.toolbar {
+    height: 65px;
+    width: 100%;
+    background: rgb(94, 120, 235);
+    position: fixed;
+    text-align: center;
+    border-bottom: 1px solid #E0E0E0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.layui-fixbar li {
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.nva_title {
+    color: #fff;
+    font-size: 24px;
+}
+
+body {
+    background: #F6F8FF;
+}
+
+.content {
+    margin-top: 3%;
+
+}
+
+/*.layui-tab-content{
+    margin: -1px !important;
+    padding: -1 !important;
+    box-sizing: border-box;
+}*/
+
+.layui-tab-brief>.layui-tab-title .layui-this {
+    font-size: 22px;
+    color: #3f7dff;
+}
+
+.layui-tab-brief>.layui-tab-title .layui-this:after {
+    border: none;
+    border-radius: 0;
+    border-bottom: 2px solid #3f7dff;
+}
+
+.layui-tab-brief>.layui-tab-title li {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    vertical-align: middle;
+    font-size: 20px;
+    transition: all .2s;
+    -webkit-transition: all .2s;
+    position: relative;
+    min-width: 65px;
+    padding: 0 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.layui-tab-brief>.layui-tab-content {
+    padding: 0px;
+}
+
+.layui-tab-card>.layui-tab-title li {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    vertical-align: middle;
+    font-size: 18px;
+    transition: all .2s;
+    -webkit-transition: all .2s;
+    position: relative;
+    min-width: 65px;
+    padding: 0 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.layui-tab-card>.layui-tab-title .layui-this {
+    color: #fff;
+    background-color: #5a72dd;
+}
+
+.layui-tab-card>.layui-tab-title {
+    background-color: #ffffff;
+}
+
+.layui-tab-card>.layui-tab-content {
+    padding: 10px;
+    background-color: #ffffff;
+}

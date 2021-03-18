@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>我的工作</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="/ok-admin/css/oksub.css" media="all" />
+    <script src="/ok-admin/lib/layui/layui.js"></script>
+    <link rel="stylesheet" href="index.css" media="all" />
+</head>
+
+<body>
+    <div class="layui-header">
+        <div class="toolbar">
+            <div class="nva_title">
+                <span>我的工作</span>
+            </div>
+        </div>
+        <ul class="layui-fixbar">
+            <a href="/common/index.html">
+                <li class="layui-icon layui-icon-home" lay-type="bar1" style="display: list-item;"></li>
+            </a>
+            <a href="/common/index.html">
+                <li class="layui-icon layui-icon-return" lay-type="bar2" style="display: list-item;"></li>
+            </a>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div class="layui-container">
+            <div class="layui-tab layui-tab-brief" lay-filter="tabs">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">我的计划</li>
+                    <li>我的总结</li>
+                    <li>我的晒绩</li>
+                </ul>
+                <div class="layui-tab-content">
+                    
+                    <div class="layui-tab-item layui-show" style="text-align: center;">
+                        <div class="layui-tab layui-tab-card">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">所有计划</li>
+                                <li>季度计划</li>
+                                <li>他人计划</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <table id="allPlans" class="layui-table" lay-even lay-skin="nob" id="allPlans" lay-filter="allPlans">
+                                    </table>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <table id="thisQuarterPlan" class="layui-table" lay-even lay-skin="nob" id="thisQuarterPlan" lay-filter="thisQuarterPlan">
+                                    </table>
+                                </div>
+
+                                <div class="layui-tab-item">
+                                    <div class="layui-input-inline">
+                                        <input id="plan_search" name="" type="text" class="layui-input" placeholder="姓名" autocomplete="off">
+                                    </div>
+                                    <button id="plan_search_button" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="search">
+                                        <i class="layui-icon">&#xe615;</i>
+                                    </button>
+                    
+                                    <table class="layui-table" lay-even lay-skin="nob" id="otherPlan" lay-filter="otherPlan">
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="editWork/newPlan.html"><button type="button" class="layui-btn layui-btn-radius  layui-btn-normal" style="width: 80%;">新增计划</button></a>
+                    </div>
+
+                    <div class="layui-tab-item" style="text-align: center;">
+                        <div class="layui-tab layui-tab-card">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">所有总结</li>
+                                <li>季度总结</li>
+                                <li>他人总结</li>
+                            </ul>
+                            <div class="layui-tab-content" >
+                                <div class="layui-tab-item layui-show">
+                                    <table class="layui-table" lay-even lay-skin="nob" id="allSummary" lay-filter="allSummary">
+                                    </table>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <table class="layui-table" lay-even lay-skin="nob" id="thisQuarterSummary" lay-filter="thisQuarterSummary">
+                                    </table>
+                                </div> 
+                                <div class="layui-tab-item">
+                                    <div class="layui-input-inline">
+                                        <input id="summary_search" name="" type="text" class="layui-input" placeholder="姓名" autocomplete="off">
+                                    </div>
+                                    <button id="summary_search_button" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="search">
+                                        <i class="layui-icon">&#xe615;</i>
+                                    </button>
+                    
+                                    <table class="layui-table" lay-even lay-skin="nob" id="otherSummary" lay-filter="otherSummary">
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="editWork/newSummary.html"><button type="button" class="layui-btn layui-btn-radius  layui-btn-normal" style="width: 80%;">新增总结</button></a>
+                    </div>
+
+                    <div class="layui-tab-item" style="text-align: center;">
+                        <div class="layui-tab layui-tab-card">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">我的晒绩</li>
+                                <li>他人晒绩</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <table class="layui-table" lay-even lay-skin="nob" id="myAchievement" lay-filter="myAchievement">
+                                    </table>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <div class="layui-input-inline">
+                                        <input id="achievement_search" name="" type="text" class="layui-input" placeholder="姓名" autocomplete="off">
+                                    </div>
+                                    <button id="achievement_search_button" class="layui-btn layui-btn-normal" lay-submit lay-filter="search">
+                                        <i class="layui-icon">&#xe615;</i>
+                                    </button>
+                                    <table class="layui-table" lay-even lay-skin="nob" id="otherAchievement" lay-filter="otherAchievement">
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="editWork/newAchieve.html"><button type="button" class="layui-btn layui-btn-radius  layui-btn-normal" style="width: 80%;">新增晒绩</button></a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+
+<script>
+    layui.use(["table", "element", "form", "laydate", "upload", "util"], function () {
+        var form = layui.form
+            , table = layui.table
+            , element = layui.element
+            , laydate = layui.laydate
+            , util = layui.util
+            , $ = layui.jquery
+            , classId = 1;
+
+        var storage = window.localStorage;
+        
+		element.on("tab(tabs)",function(data){
+			switch(data.index){
+				case 0:
+					table.resize('allPlans');
+                    table.resize('thisQuarterPlan');
+                    table.resize('otherPlan');
+					break;
+				case 1:
+					table.resize('allSummary');
+                    table.resize('thisQuarterSummary');
+                    table.resize('otherSummary');
+					break;
+				case 2:
+					table.resize('myAchievement');
+					table.resize('otherAchievement');
+					break;
+			}
+		})
+    });
+</script>
+
+<script src="/common/myWork/planTbl.js"></script>
+<script src="/common/myWork/summaryTbl.js"></script>
+<script src="/common/myWork/achievementTbl.js"></script>
+
+<script type="text/html" id="allplanOpt">
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+</script>
+
+<script type="text/html" id="thisplanOpt">
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+</script>
+
+<script type="text/html" id="allsumOpt">
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+</script>
+
+<script type="text/html" id="thissumOpt">
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+</script>
+
+<script type="text/html" id="myachOpt">
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+</script>
