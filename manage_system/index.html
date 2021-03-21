@@ -16,23 +16,31 @@
 <body>
     <div class="my-box">
         <div style="margin-left:10%;margin-right:10%;">
-            <form class="layui-form login">
-                <h1>萧山区企事业人员平时考核系统</h1>
-
-                <div class="layui-form-item">
-                    <input class="layui-input" name="username" id="username" placeholder="用户名" lay-verify="required" type="text"
-                        id="username" autocomplete="off">
-                </div>
-                <div class="layui-form-item">
-                    <input class="layui-input" name="password" id="password" placeholder="密码" lay-verify="required"
-                        type="password" autocomplete="off">
-                </div>
-                <div class="layui-form-item" style="right: auto;" id="isAdmin">
-                    <input type="radio" lay-filter="isadmin" name="is_admin" value=0 title="普通用户" checked>
-                    <input type="radio" lay-filter="isadmin" name="is_admin" value=1 title="管理员" >
-                </div>
-                <button type="submit" class="layui-btn login_btn layui-btn-normal" style="width: 100%;" lay-submit lay-filter="login">登录</button>
-            </form>
+            <div class="mybox_left">
+                <h1>某区企事业人员<br>&nbsp; 平时考核系统</h1>
+            </div>
+            <div class="mybox_right">
+                <form class="layui-form login">
+                
+                    <div class="login_face">
+                        <img src="/ok-admin/images/horse.jpg" class="userAvatar">
+                    </div>
+                    <div class="layui-form-item">
+                        <input class="layui-input" name="username" id="username" placeholder="用户名" lay-verify="required" type="text"
+                            id="username" autocomplete="off">
+                    </div>
+                    <div class="layui-form-item">
+                        <input class="layui-input" name="password" id="password" placeholder="密码" lay-verify="required"
+                            type="password" autocomplete="off">
+                    </div>
+                    <div class="layui-form-item" style="right: auto;" id="isAdmin">
+                        <input type="radio" lay-filter="isadmin" name="is_admin" value=0 title="普通用户" checked>
+                        <input type="radio" lay-filter="isadmin" name="is_admin" value=1 title="管理员" >
+                    </div>
+                    <button type="submit" class="layui-btn login_btn layui-btn-normal" style="width: 100%;" lay-submit lay-filter="login">登录</button>
+                </form>
+            </div>
+           
         </div>
 
     </div>

@@ -62,7 +62,7 @@ layui.use(["table", "element", "form", "laydate", "upload", "util"], function ()
       , { field: 'id', title: 'plan_id', hide: true }
       , { field: 'name', hide: true}
       , { field: 'title', minWidth: 180, title: '计划标题', event: 'detail', align: 'center' }
-      , { fixed: 'right', title: '操作', width: 70, templet: '#allplanOpt', align: 'center' }
+      , { fixed: 'right', title: '操作', width: 120, templet: '#allplanOpt', align: 'center' }
     ]],
     parseData: function (res) {
       return {
@@ -99,7 +99,7 @@ layui.use(["table", "element", "form", "laydate", "upload", "util"], function ()
       , { field: 'id', title: 'plan_id', hide: true }
       , { field: 'name', hide: true}
       , { field: 'title', minWidth: 180, title: '计划标题', event: 'detail', align: 'center' }
-      , { fixed: 'right', title: '操作', width: 70, templet: '#thisplanOpt', align: 'center' }
+      , { fixed: 'right', title: '操作', width: 120, templet: '#thisplanOpt', align: 'center' }
     ]],
     parseData: function (res) {
       return {
@@ -157,6 +157,9 @@ layui.use(["table", "element", "form", "laydate", "upload", "util"], function ()
     else if (obj.event === 'detail') {
       storage.setItem("plan_id", obj.data.plan_id);
       window.location.href = "/common/myWork/editWork/otherPlan.html";
+    }else if(obj.event === 'update'){
+      storage.setItem("plan_id", obj.data.plan_id);
+      window.location.href = "/common/myWork/editWork/editPlan.html";
     }
   });
 
@@ -173,6 +176,9 @@ layui.use(["table", "element", "form", "laydate", "upload", "util"], function ()
       storage.setItem("plan_id", obj.data.plan_id);
       storage.setItem("creator_name", obj.data.name);
       window.location.href = "/common/myWork/editWork/otherPlan.html";
+    }else if(obj.event === 'update'){
+      storage.setItem("plan_id", obj.data.plan_id);
+      window.location.href = "/common/myWork/editWork/editPlan.html";
     }
   });
 

@@ -136,7 +136,7 @@
                 'user_id': parseInt(storage.getItem('user_id')),
             }),
             success: function(data) {
-                $("#plan_title").val(data.body.assess_organization + nowDate.getFullYear() + "年第" + getQuarter(parseInt(nowDate.getMonth())) + "季度" + data.body.name + "工作计划")
+                $("#plan_title").val(data.body.assess_organization +" "+ nowDate.getFullYear() + "年第" + getQuarter(parseInt(nowDate.getMonth())) + "季度" + data.body.name + "工作计划")
             }
         });
         
