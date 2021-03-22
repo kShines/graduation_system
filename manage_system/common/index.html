@@ -46,8 +46,8 @@
         .layui-btn {
             padding: 10px;
             margin: 5% 10% 5% 10%;
-            height: 200px;
-            width: 200px;
+            height: 400px;
+            width: 300px;
             text-align: center;
             color: #fff;
             font-size: 30px;
@@ -57,16 +57,7 @@
             margin-top: 0%;
         }
 
-        #unuse {
-            height: 130px;
-            width: 130px;
-            -webkit-transform: rotate(45deg);
-            padding: 10px;
-            margin: 10% 15% 0% 10%;
-            text-align: center;
-            color: #fff;
-            font-size: 30px;
-        }
+
 
         @media (max-width: 571px) {
             .layui-btn {
@@ -83,17 +74,6 @@
                 margin-top: 5%;
             }
 
-            #unuse {
-                height: 100px;
-                width: 100px;
-                -webkit-transform: rotate(45deg);
-                padding: 10px;
-                margin: 15% 5% 5% 15%;
-                text-align: center;
-                background-color: #79C48C;
-                color: #fff;
-                font-size: 30px;
-            }
         }
     </style>
 </head>
@@ -108,7 +88,7 @@
 
         <ul class="layui-fixbar">
             <a href="/index.html">
-                <li class="layui-icon layui-icon-logout" lay-type="logout" style="display: list-item;"></li>
+                <li class="layui-icon layui-icon-logout" lay-type="logout" style="display: list-item; font-size: 20px;">退出</li>
             </a>
         </ul>
     </div>
@@ -122,33 +102,28 @@
         <div class="layui-container">
 
             <div class="layui-row">
-                <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
+                <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
                     <a type="button" class="layui-btn" style="background-color:#96CDED;" href="myWork/index.html">
                         
                         <span>我的工作</span>
                         <br><br>
-                        <i class="layui-icon" style="font-size: 65px;">&#xe62a;</i>
+                        <i class="layui-icon" style="font-size: 120px;">&#xe62a;</i>
                     </a>
                 </div>
 
-                <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
+                <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
                     <a type="button" class="layui-btn" style="background-color:#66ACD5;" href="assessmentResult/index.html">
                         <span>考核结果</span>
                         <br><br>
-                        <i class="layui-icon" style="font-size: 80px;">&#xe63c;</i>
+                        <i class="layui-icon" style="font-size: 120px;">&#xe63c;</i>
                     </a>
                 </div>
-                <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
+                <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
                     <a type="button" class="layui-btn" style="background-color:#7FBAF2;"  href="myInfo/index.html">
                         <span>信息设置</span>
                         <br><br>
-                        <i class="layui-icon" style="font-size: 80px;">&#xe620;</i>
+                        <i class="layui-icon" style="font-size: 120px;">&#xe620;</i>
                     </a>
-                </div>
-                <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
-                    <div id="unuse" style="background-color:#4597C7;">
-
-                    </div>
                 </div>
             </div>
 

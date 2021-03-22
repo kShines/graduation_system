@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title id="pageTitle">计划详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="/ok-admin/css/oksub.css" media="all" />
+    <script src="/ok-admin/lib/layui/layui.js"></script>
+    <link rel="stylesheet" href="/common/myWork/index.css" media="all" />
+    <style>
+        .layui-form-pane .layui-form-label {
+            width: 100px;
+            padding: 8px 25px;
+            height: 35px;
+            line-height: 20px;
+            border-width: 0px;
+            border-style: solid;
+            /* border-radius: 2px 0 0 2px; */
+            text-align: center;
+            background-color: #fbfbfb00;
+            overflow: hidden;
+            box-sizing: border-box;
+            font-size: 18px;
+        }
+
+        .layui-form-pane .layui-form-text .layui-textarea {
+            min-height: 350px;
+            border-radius: 0 0 2px 2px;
+            font-size: 18px;
+        }
+
+        .layui-form-radio>i:hover,
+        .layui-form-radioed>i {
+            color: #57b1ff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layui-header">
+        <div class="toolbar">
+            <div class="nva_title">
+                <span>计划详情</span>
+            </div>
+        </div>
+        <ul class="layui-fixbar">
+            <a href="/common/index.html">
+                <li class="layui-icon layui-icon-home" lay-type="bar1" style="display: list-item;"></li>
+            </a>
+            <a href="/common/myWork/index.html">
+                <li class="layui-icon layui-icon-return" lay-type="bar2" style="display: list-item;"></li>
+            </a>
+            <li class="layui-icon layui-fixbar-top" lay-type="top" style="display: list-item;"></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div class="layui-container">
+            <form class="layui-form layui-form-pane" action="" lay-filter="example" style="text-align: center;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">周 期</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="time" value="季度" title="季度" checked="">
+                        <input type="radio" name="time" value="月" title="月" disabled>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓  名</label>
+                    <div class="layui-input-block">
+                        <input id="username" type="text" name="username" lay-verify="title" autocomplete="off"
+                            class="layui-input" required disabled>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">标 题</label>
+                    <div class="layui-input-block">
+                        <input id="title" type="text" name="username" lay-verify="title" autocomplete="off"
+                            class="layui-input" required disabled>
+                    </div>
+                </div>
+
+                <hr>
+
+                
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">计划内容</label>
+                    <div class="layui-input-block" style="margin:10px;">
+                        <textarea id="textarea" placeholder="请输入内容" class="layui-textarea" name="desc" required disabled></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+
+<script>
+    layui.use(["table", "element", "form", "laydate", "upload", "util"], function () {
+        var form = layui.form
+            , table = layui.table
+            , element = layui.element
+            , laydate = layui.laydate
+            , util = layui.util
+            , $ = layui.jquery
+            , classId = 1;
+
+        var storage = window.localStorage;
+        //if(storage.getItem("creator_name") == null){
+        //    document.getElementById("username").value=storage.getItem("name");
+        //} else {
+        //    document.getElementById("username").value=storage.getItem("creator_name");
+        //}
+        
+        
+        $.ajax({
+            url: 'http://localhost:8090/api/getPlanById',
+            method: 'POST',
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify({
+                'plan_id': parseInt(storage.getItem("plan_id"))
+            }),
+            success: function(data) {
+                console.log(data.body);
+                document.getElementById("title").value=data.body.title;
+                document.getElementById("textarea").value=data.body.text;
+                document.getElementById("username").value=data.body.name;
+            }
+        });
+
+        
+
+    });
+</script>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../ok-admin/css/oksub.css" media="all" />
+
+    <script src="../ok-admin/lib/layui/layui.js"></script>
+    <style>
+        .toolbar {
+            height: 65px;
+            width: 100%;
+            background: rgb(94, 120, 235);
+            position: fixed;
+            text-align: center;
+            border-bottom: 1px solid #E0E0E0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+        .layui-fixbar li {
+            background-color: rgba(0, 0, 0, .3);
+        }
+        .nva_title {
+            color: #fff;
+            font-size: 24px;
+        }
+
+        body {
+            background: #F6F8FF;
+        }
+
+        .content {
+            margin-top: 5%;
+
+        }
+
+        .user_name {
+            margin-top: 10px;
+        }
+
+        .layui-btn {
+            padding: 10px;
+            margin: 5% 10% 5% 10%;
+            height: 200px;
+            width: 200px;
+            text-align: center;
+            color: #fff;
+            font-size: 30px;
+        }
+
+        .layui-container {
+            margin-top: 0%;
+        }
+
+        #unuse {
+            height: 130px;
+            width: 130px;
+            -webkit-transform: rotate(45deg);
+            padding: 10px;
+            margin: 10% 15% 0% 10%;
+            text-align: center;
+            color: #fff;
+            font-size: 30px;
+        }
+
+        @media (max-width: 571px) {
+            .layui-btn {
+                padding: 10px;
+                margin: 5% 10% 5% 10%;
+                height: 150px;
+                width: 150px;
+                text-align: center;
+                background-color: #79C48C;
+                color: #fff;
+            }
+
+            .layui-container {
+                margin-top: 5%;
+            }
+
+            #unuse {
+                height: 100px;
+                width: 100px;
+                -webkit-transform: rotate(45deg);
+                padding: 10px;
+                margin: 15% 5% 5% 15%;
+                text-align: center;
+                background-color: #79C48C;
+                color: #fff;
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layui-header">
+        <div class="toolbar">
+            <div class="nva_title">
+                <span>主 页</span>
+            </div>
+        </div>
+
+        <ul class="layui-fixbar">
+            <li class="layui-icon layui-icon-home" lay-type="home" href="index.html"></li>
+            <li class="layui-icon layui-icon-return" lay-type="return" style="display: list-item;"></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div style="padding: 3%;">
+            <h2 class="organization" id="organization_box">中共萧山区组织部</h2>
+            <h1 class="user_name" id="name_box">薛宝钗，欢迎您！</h1>
+        </div>
+
+        <div class="layui-container">
+
+            <div class="layui-row">
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
+                    <a type="button" class="layui-btn" style="background-color:#96CDED;" href="myWork/index.html">
+                        
+                        <span>我的工作</span>
+                        <br><br>
+                        <i class="layui-icon" style="font-size: 65px;">&#xe62a;</i>
+                    </a>
+                </div>
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
+                    <a type="button" class="layui-btn" style="background-color:#66ACD5;" href="assessmentResult/index.html">
+                        <span>考核结果</span>
+                        <br><br>
+                        <i class="layui-icon" style="font-size: 80px;">&#xe63c;</i>
+                    </a>
+                </div>
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
+                    <a type="button" class="layui-btn" style="background-color:#7FBAF2;"  href="myInfo/index.html">
+                        <span>信息设置</span>
+                        <br><br>
+                        <i class="layui-icon" style="font-size: 80px;">&#xe620;</i>
+                    </a>
+                </div>
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md3">
+                    <div id="unuse" style="background-color:#4597C7;">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+
+<script>
+
+    var storage = window.localStorage;
+    document.getElementById('organization_box').innerHTML=storage.getItem("organization_name");
+    document.getElementById('name_box').innerHTML=storage.getItem("name") + ",欢迎您";
+    
+
+    layui.use(["table", "element", "form", "laydate", "upload"], function () {
+        var form = layui.form
+            , table = layui.table
+            , element = layui.element
+            , laydate = layui.laydate
+            , util = layui.util
+            , $ = layui.jquery
+            , classId = 1;
+
+        
+
+
+    })
+</script>

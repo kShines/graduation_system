@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>单位机构管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="/ok-admin/css/oksub.css" media="all" />
+    <script src="/ok-admin/lib/layui/layui.js"></script>
+    
+</head>
+
+<body>
+    <div class="ok-body">
+        <div class="layui-row">
+            <div class="layui-col-md3">
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                    <legend>机构树</legend>
+                </fieldset>
+                <div class="layui-form">
+                    <div id="ogTree" lay-filter="ogTree" style="padding: 10px; border: 1px solid #ddd; height:600px;width:250px;margin-right: 0px;">
+                        <ul id="ogTre"></ul>
+                    </div>
+                </div>
+                
+
+            </div>
+            <div class="layui-col-md9">
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                    <legend>单位考核设置</legend>
+                </fieldset>
+                <form class="layui-form layui-form-pane" action="" lay-filter="example" >
+                    
+                    <div class="layui-form-item" >
+                        <label class="layui-form-label">当前单位</label>
+                        <div class="layui-input-block" style="width:60%;">
+                            <input id="organization_name" type="text" name="username" lay-verify="title" autocomplete="off" value=""
+                                class="layui-input" style="display:inline-block;width:70%">
+                            <button class="layui-btn layui-btn-normal" id="modify_organization_name" style="display:inline-block;">保存单位名称</button>
+                        </div>
+                        
+                    </div>
+                    <div class="layui-form-item">
+                        
+                    </div>
+                    <table class="layui-hide" id="adminTpl" lay-filter="adminTpl"></table>
+
+                    <div class="layui-form-item">
+                        <button id="save_setting" class="layui-btn layui-btn-normal" lay-filter="save_setting">保存设置</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+
+<form class="layui-form" id="newAdminer" style="display:none;width:80%;margin:30px;">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-inline">
+            <input id="new_admin_name" name="name" type="text" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+            <input id="new_admin_sex_1" type="radio" name="new_admin_sex" value=1 title="男" checked>
+            <input id="new_admin_sex_2" type="radio" name="new_admin_sex" value=0 title="女">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">身份证号</label>
+        <div class="layui-input-inline">
+            <input id="new_admin_idNumber" name="idNumber" type="text" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机号码</label>
+        <div class="layui-input-inline">
+            <input id="new_admin_username" name="username" type="text" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-inline">
+            <input type="password" id="new_admin_password" name="password" type="text" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" lay-filter="myDiv">
+        <label class="layui-form-label">所属单位</label>
+        <div class="layui-input-inline">
+            <select id="new_admin_organization" lay-filter="mySelect" >
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">所属职务</label>
+        <div class="layui-input-inline">
+            <input id="new_admin_position" type="text" name="position" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" lay-filter="myDiv">
+        <label class="layui-form-label">考核单位</label>
+        <div class="layui-input-inline">
+            <select id="new_admin_assess_organization" lay-filter="assess_organization_select" >
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">考核职务</label>
+        <div class="layui-input-inline">
+            <input id="new_admin_assess_position" type="text" name="assess_position" class="layui-input">
+        </div>
+    </div>
+    <!--
+    <div class="layui-form-item">
+        <label class="layui-form-label">考核对象</label>
+        <div class="layui-input-block">
+            <select id="person" name="person" lay-search="" lay-filter="" value="">
+                <option value="">对象</option>
+                <option value="领导">领导</option>
+                <option value="普通公务员">普通公务员</option>
+                <option value="内部机构领导">内部机构领导</option>
+                <option value="班子成员">班子成员</option>
+            </select>
+        </div>
+    </div>
+    -->
+</form>
+
+<form class="layui-form" id="setAdmin" style="display:none;margin:30px;">
+    <div class="layui-input-inline">
+        <input name="" type="text" class="layui-input" placeholder="姓名" autocomplete="off">
+    </div>
+    <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="search">
+        <i class="layui-icon">&#xe615;</i>
+    </button>
+    <table class="layui-hide" id="smallinfoTbl" lay-filter="smallinfoTbl" style=""></table>
+</form>
+
+<form id="addOrganization" class="layui-form layui-form-pane" action="" lay-filter="example" style="display:none;width:80%;margin:30px;">
+    <div class="layui-form-item" >
+        <label class="layui-form-label">机构名称</label>
+        <div class="layui-input-block" style="width:60%">
+            <input id="new_organization_name" type="text" name="username" lay-verify="title" autocomplete="off" value=""
+                class="layui-input">
+        </div>
+    </div>
+</form>
+
+</html>
+
+<script>
+    layui.use(["table", "element", "form", "laydate", "laytpl", "tree", "layer"], function () {
+        var form = layui.form
+            , table = layui.table
+            , element = layui.element
+            , laydate = layui.laydate
+            , layer = layui.layer
+            , laytpl = layui.laytpl
+            , tree = layui.tree
+            , $ = layui.jquery;
+    
+        var storage = window.localStorage;
+        function getOrganizationTreeByUserId(){
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8090/api/getOrganizationTreeByUserId",
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({
+                    'user_id': parseInt(storage.getItem('user_id'))
+                }),
+                success: function (data) {
+                    layui.use('tree', function () {
+                        var tree = layui.tree;
+                        tree.render({
+                            elem: '#ogTree',  //绑定元素
+                            contentType: 'application/json',
+                            edit: ['add', 'del'], //操作节点的图标
+                            data: data.body,
+                            customOperate: true,
+                            click: function(item){
+                                storage.setItem('organization_id', item.data.id);
+                                storage.setItem('organization_title', item.data.title);
+                                storage.setItem('organization_node_type', item.data.node_type);
+                                if(item.data.node_type == 'organization'){
+                                    storage.setItem("is_organization", 1);
+                                } else {
+                                    storage.setItem("is_organization", 0);
+                                }
+                                adminOrganization(item.data.node_type, item.data.id, item.data.title);
+                                renderSmallInfoTable();
+                            },
+                            operate: function(obj){
+                                var type = obj.type;
+                                var data = obj.data;
+                                var parentId = obj.parentId;
+                                if(data.node_type == "organization"){
+                                    if (type == 'add'){
+                                        layer.open({
+                                            type: 1,
+                                            area: ['450px', '200px'],
+                                            title: '新增机构',
+                                            content: $("#addOrganization"),
+                                            shade: 0,
+                                            btn: ['确认', '取消']
+                                            , btn1: function (index, layero) {
+                                                addOrganization(data.id);
+                                                getOrganizationTreeByUserId();
+                                                layer.closeAll();
+                                                
+                                            },
+                                            btn2: function (index, layero) {
+                                                getOrganizationTreeByUserId();
+                                                layer.closeAll();
+                                            },
+                                        });
+                                    } else if(type == 'del'){
+                                        layer.confirm('真的删除该机构吗？ 警告: 删除操作将会删除下属所有机构和考核组。', function(index){
+                                            deleteOrganization(data.id);
+                                            layer.close(index);
+                                            
+                                        });
+                                    }
+                                } else {
+                                    alert("不支持对考核组的编辑,请前往人员分组管理界面");
+                                    getOrganizationTreeByUserId();
+                                }
+                                
+                            }
+                        });
+                    });
+                }
+            });
+            return false;
+        }
+        getOrganizationTreeByUserId();
+
+        $.ajax({
+            url: 'http://127.0.0.1:8090/api/getAllOrganization',
+            type: 'POST',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function(data){
+                data = data.body;
+                console.log(data);
+                for(var i = 0;i < data.organizations.length; ++i){
+                    var item = data.organizations[i];
+                    console.log(item);
+                    $('#new_admin_organization').append(new Option(item.name, item.organization_id));
+                    $('#new_admin_assess_organization').append(new Option(item.name, item.organization_id))
+                }
+                form.render("select");
+            }
+        });
+
+        function addOrganization(superior_id){
+            $.ajax({
+                url: 'http://127.0.0.1:8090/api/createOrganization',
+                type: 'POST',
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                data:JSON.stringify({
+                    'name': $("#new_organization_name").val(),
+                    'superior': superior_id
+                }),
+                success: function(data){
+                    getOrganizationTreeByUserId();
+                }
+            });
+        }
+
+        function deleteOrganization(organization_id){
+            $.ajax({
+                url: 'http://127.0.0.1:8090/api/deleteOrganizationById',
+                type: 'POST',
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                data:JSON.stringify({
+                    'organization_id': organization_id
+                }),
+                success: function(data){
+                    getOrganizationTreeByUserId();
+                }
+            })
+        }
+
+        function renderSmallInfoTable(){
+            table.render({
+                elem: "#smallinfoTbl",
+                skin: 'line',
+                url: 'http://127.0.0.1:8090/api/getTotalUser',
+                method: 'POST',
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                title: '用户数据表'
+                , cols: [[
+                    { type: 'checkbox', fixed: 'left' }
+                    , { title: '序号', width: 50, type: 'numbers' }
+                    , { field: 'user_id', hide:true}
+                    , { field: 'name', title: '姓名', minWidth: 120, edit: 'text', align: 'center' }
+                    , { field: 'sex', title: '性别', width: 100, edit: 'text', align: 'center' }
+                    , { field: 'phoneNumber', title: '手机号码', minWidth: 180, edit: 'text', align: 'center' }
+                    , { field: 'assess_organization', title: '考核单位', minWidth: 180, edit: 'text', align: 'center' }
+                    , { field: 'assess_position', title: '考核职务', minWidth: 180, edit: 'text', align: 'center' }
+                ]]
+                , page: true,
+                parseData: function (res) {
+                    return {
+                        "code": 0,
+                        "msg": res.header.message,
+                        "count": res.body.count,
+                        "data": res.body.result
+                    };
+                },
+                done: function (res, curr, count) { }
+            });
+        }
+        
+
+        function adminOrganization(node_type, organization_id, title){
+            console.log(title);
+            $("#organization_name").val(title);
+            var is_organization = 0;
+            if(node_type == "organization") is_organization = 1;
+            table.render({
+                elem: "#adminTpl",
+                toolbar: '#toolbar',
+                title: '用户数据表',
+                url: 'http://localhost:8090/api/getOrganizationAdminById',
+                method: 'POST',
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                where: {
+                    'user_id': parseInt(storage.getItem("user_id")),
+                    'organization_id': organization_id,
+                    'is_organization': is_organization
+                },
+                cols: [[
+                    { title: '序号', width: 50, type: 'numbers' }
+                    , { field: 'user_id', hide:true}
+                    , { field: 'name', title: '姓名', minWidth: 120, align: 'center' }
+                    , { field: 'sex', title: '性别', width: 100, align: 'center' }
+                    , { field: 'idNumber', title: '身份证号', minWidth: 180, align: 'center' }
+                    , { field: 'phoneNumber', title: '手机号码', minWidth: 180, align: 'center' }
+                    , { field: 'password', title: '密码', minWidth: 180, edit:'true', align: 'center',style:"color:red;" }
+                    , { field: 'organization', title: '所属工作单位', minWidth: 180, align: 'center' }
+                    , { field: 'position', title: '所属单位职务', minWidth: 180, align: 'center' }
+                    , { field: 'assess_organization', title: '考核单位', minWidth: 180, align: 'center' }
+                    , { field: 'assess_position', title: '考核职务', minWidth: 180, align: 'center' }
+                    , { field: 'assess_group', title: '所在考核组', minWidth: 180, align: 'center' }
+                    , { field: 'group_start_time', title: '加入时间', minWidth: 180, align: 'center' }
+                    , { fixed: 'right', title: '操作', toolbar: '#bar', minWidth: 100, align: 'center' }
+                     ]],
+                page: true,
+                parseData: function(res){
+                    return {
+                        "code": 0,
+                        "msg": res.header.message,
+                        "count": res.body.count,
+                        "data": res.body.result
+                    };
+                },
+                done: function (res, curr, count) { }
+            });
+        }
+
+        function getFormData(formId){
+            var results = $(formId).serializeArray();
+            data = {};
+            $.each(results,function(index, item){
+                if(item.value && $.trim(item.value)!=""){
+                    data[item.name] = item.value;
+                }
+            });
+            return data;
+        }
+
+        function setOrganizationAdminInfo(userInfo, organization_id, is_organization){
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8090/api/setOrganizationAdminUser",
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({
+                    'user_info': userInfo,
+                    'organization_id': organization_id,
+                    'is_organization': is_organization
+                }),
+                success: function (data) {
+                    adminOrganization(storage.getItem("organization_node_type"),parseInt(storage.getItem("organization_id")),storage.getItem("organization_title"));
+                }
+            });
+        }
+        
+        // 新建领导人员
+        function newAdminUser(){
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8090/api/addAdminByOrganizationId",
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({
+                    'organization_id': parseInt(storage.getItem('organization_id')),
+                    'is_organization': parseInt(storage.getItem("is_organization")),
+                    "name": $("#new_admin_name").val(),
+                    "sex": parseInt($("input[name='new_admin_sex']:checked").val()),
+                    "idNumber": $("#new_admin_idNumber").val(),
+                    "username": $("#new_admin_username").val(),
+                    "password": $("#new_admin_password").val(),
+                    "be_organization_id": parseInt($("#new_admin_organization").val()),
+                    "position": $("#new_admin_position").val(),
+                    "be_assess_organization_id": parseInt($("#new_admin_assess_organization").val()),
+                    "assess_position": $("#new_admin_assess_position").val(),
+                    "is_assess": parseInt($("#new_admin_is_assess").val())
+                }),
+                success: function(){
+                    adminOrganization(storage.getItem("organization_node_type"),parseInt(storage.getItem("organization_id")),storage.getItem("organization_title"));
+                }
+            });
+        };
+
+        function deleteAdminUser(user_id){
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8090/api/deleteOrganizationAdminUser",
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({
+                    'user_id': user_id,
+                    'organization_id': parseInt(storage.getItem("organization_id")),
+                    'is_organization': parseInt(storage.getItem("is_organization"))
+                }),
+                success: function(){
+                    adminOrganization(storage.getItem("organization_node_type"),parseInt(storage.getItem("organization_id")),storage.getItem("organization_title"));
+                }
+            });
+
+        }
+
+        table.on('tool(adminTpl)', function(obj){
+            var data = obj.data;
+            // console.log(data);
+            if(obj.event === 'del'){
+              layer.confirm('真的删除该管理员吗？', function(index){
+                deleteAdminUser(data.user_id);
+                obj.del();
+                layer.close(index);
+              });
+            }
+        });
+
+        //头工具栏事件
+        table.on('toolbar(adminTpl)', function (obj) {
+            switch (obj.event) {
+                case 'newAdmin':
+                    layer.open({
+                        type: 1,
+                        area: ['450px', '520px'],
+                        title: '新增管理人员',
+                        content: $("#newAdminer"),
+                        shade: 0,
+                        btn: ['确认', '取消']
+                        , btn1: function (index, layero) {
+                            newAdminUser();
+                            layer.closeAll();
+                        },
+                        btn2: function (index, layero) {
+                            layer.closeAll();
+                        },
+                    })
+                    break;
+                case 'selectFromAll':
+                    layer.open({
+                        type: 1,
+                        area: ['1000px', '600px'],
+                        title: '设置管理员',
+                        content: $("#setAdmin"),
+                        shade: 0,
+                        btn: ['确认', '取消'],
+                        btn1: function (index, layero) {
+                            var checkStatus = table.checkStatus('smallinfoTbl');
+                            console.log(checkStatus.data);
+                            setOrganizationAdminInfo(checkStatus.data, parseInt(storage.getItem("organization_id")), parseInt(storage.getItem("is_organization")));
+                            adminOrganization(storage.getItem("organization_node_type"), parseInt(storage.getItem("organization_id")), storage.getItem("organization_title"));
+                            layer.closeAll();
+                        },
+                        btn2: function (index, layero) {
+                            layer.closeAll();
+                        },
+                    })
+                    table.resize("smallinfoTbl");
+                    break;
+            };
+        });
+        
+        $("#save_setting").click(function(){
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8090/api/updateUserInfoByIdList",
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({
+                    'user_info': table.cache['adminTpl'],
+                    'organization_id': parseInt(storage.getItem("organization_id")),
+                    'is_organization': parseInt(storage.getItem("is_organization"))
+                }),
+                success: function (data) {
+                    alert("保存成功");
+                    adminOrganization(storage.getItem("organization_node_type"),parseInt(storage.getItem("organization_id")),storage.getItem("organization_title"));
+                }
+            });
+            return false;
+        });
+        $("#modify_organization_name").click(function(){
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8090/api/modifyOrganizationNameById",
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({
+                    'organization_id': parseInt(storage.getItem("organization_id")),
+                    'is_organization': parseInt(storage.getItem("is_organization")),
+                    'name': $("#organization_name").val()
+                }),
+                success: function (data) {
+                    alert("保存成功");
+                    getOrganizationTreeByUserId();
+                    adminOrganization(storage.getItem("organization_node_type"),parseInt(storage.getItem("organization_id")),storage.getItem("organization_title"));
+                }
+            });
+            return false;
+        });
+    })
+</script>
+
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-bg layui-btn-normal" lay-event="newAdmin">新增单位管理员</a>
+        <a class="layui-btn layui-btn-bg " lay-event="selectFromAll">从已有人员选择</a>
+    </div>
+</script>
+
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="isUse"  lay-skin="switch" lay-text="是|否" >
+</script>
+
+<script type="text/html" id="bar">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>

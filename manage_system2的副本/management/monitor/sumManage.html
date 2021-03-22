@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>个人总结管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="/ok-admin/css/oksub.css" media="all" />
+    <script src="/ok-admin/lib/layui/layui.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="ok-body">
+        <div class="layui-row">
+            <div class="layui-col-md3">
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                    <legend>机构树</legend>
+                </fieldset>
+                <div style="padding: 10px; border: 1px solid #ddd; height:600px;width:250px;margin-right: 20px;">
+                    <ul id="ogTree"></ul>
+                </div>
+
+            </div>
+            <div class="layui-col-md9">
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                    <legend>个人总结管理</legend>
+                </fieldset>
+                <form class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <div class="layui-input-inline">
+                                    <input name="name" type="text" class="layui-input" placeholder="姓名" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="layui-inline">
+                            <div class="">
+                                <button type="submit" class="layui-btn" lay-submit="" lay-filter="name_search">
+                                    <i class="layui-icon">&#xe615;</i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </form>
+                <table class="layui-hide" id="sumTbl" lay-filter="sumTbl"></table>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+
+
+<form class="layui-form" id="personSum"  style="display:none;margin:30px;">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <legend>查询条件</legend>
+    </fieldset>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <div class="layui-input-inline">
+                    <input id="date" name="sum" type="text" class="layui-input" placeholder="时间范围" autocomplete="off">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <div class="">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="time_search">
+                    <i class="layui-icon">&#xe615;</i>
+                </button>
+            </div>
+        </div>
+        
+    </div>
+    <table class="layui-hide" id="personSumTbl" lay-filter="personSumTbl" ></table>
+</form>
+<!-- 表单结束 -->
+
+
+<form class="layui-form" id="sumContent" style="display:none;width:80%;margin:30px;">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">总结标题</label>
+        <div class="layui-input-inline">
+            <input id="title" type="text" class="layui-input" value="2020年第三季度总结" disabled>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">提交时间</label>
+        <div class="layui-input-inline">
+            <input id="submit_time" type="text" class="layui-input" value="2020年10月1日" disabled>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">总结周期：</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input" value="季度" disabled>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">总结内容</label>
+        <div class="layui-input-block" style="margin:10px;">
+            <textarea id="content" placeholder="请输入内容" class="layui-textarea" name="desc" required></textarea>
+        </div>
+    </div>
+
+</form>
+
+<form class="layui-form" id="setRequirement" style="display:none;width:80%;margin:30px;">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-inline" style="width:60%">
+            <input id="export_name" type="text" name="name" class="layui-input" value="" placeholder="输入姓名，未输入即单位下全体人员" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">导出单位</label>
+        <div class="layui-input-inline" style="width:60%">
+            <input id = "download_organization" type="text" class="layui-input layui-disabled" value="" disabled>
+        </div>
+    </div>
+    
+    <div class="layui-form-item">
+        <label class="layui-form-label">提交时间</label>
+        <div class="layui-input-block">
+            <input id="date1" name="time_limit" type="text" class="layui-input" value="">
+        </div>
+    </div>
+</form>
+
+</html>
+
+<script>
+    layui.use(["table", "element", "form", "laydate", "laytpl", "tree", "layer"], function () {
+        var form = layui.form
+            , table = layui.table
+            , element = layui.element
+            , laydate = layui.laydate
+            , layer = layui.layer
+            , laytpl = layui.laytpl
+            , tree = layui.tree
+            , $ = layui.jquery;
+
+        laydate.render({ elem: "#date", type: "month", range: '~', format: 'yyyy-MM' });//或 range: '~' 来自定义分割字符
+        laydate.render({ elem: "#date1", type: "month", range: '~', format: 'yyyy-MM' });//或 range: '~' 来自定义分割字符
+        
+        var storage = window.localStorage;
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8090/api/getOrganizationTreeByUserId",
+            dataType: 'json',
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({
+                'user_id': parseInt(storage.getItem('user_id'))
+            }),
+            success: function (data) {
+                layui.use('tree', function () {
+                    var tree = layui.tree;
+                    tree.render({
+                        elem: '#ogTree',  //绑定元素
+                        contentType: 'application/json',
+                        data: data.body,
+                        click: function(item){
+                            // console.log(111);
+                            storage.setItem("organization_id", item.data.id);
+                            storage.setItem("organization_title", item.data.title);
+                            $("#download_organization").val(item.data.title+ "(为左侧机构树选定的单位)");
+                            if(item.data.node_type == 'organization')
+                                storage.setItem("is_organization", 1);
+                            else
+                                storage.setItem("is_organization", 0);
+                            // console.log(item);
+                            adminUserList(item.data.node_type, item.data.id, item.data.title);
+                        }
+                    });
+                });
+            }
+        });
+
+        function adminUserList(node_type, organization_id, title){
+            is_organization = 1;
+            if(node_type != "organization")is_organization = 0;
+            table.render({
+                elem: "#sumTbl",
+                toolbar: '#toolbar',
+                defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                    title: '提示'
+                    , layEvent: 'LAYTABLE_TIPS'
+                    , icon: 'layui-icon-tips'
+                }],
+                url: 'http://127.0.0.1:8090/api/getAdminUserByOrganizationId',
+                method: 'POST',
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                where: {
+                    'user_id': parseInt(storage.getItem("user_id")),
+                    'organization_id': organization_id,
+                    'is_organization': is_organization
+                },
+                title: '总结表'
+                , cols: [[
+                    { title: '序号', width: 50, type: 'numbers' }
+                    , { field: 'user_id', title: 'id', hide: true}
+                    , { field: 'name', title: '姓名', minwidth: 80, align: 'center' }
+                    , { field: 'sex', title: '性别', width: 100,  align: 'center' }
+                    , { field: 'idNumber', title: '身份证号', minwidth: 120, align: 'center' }
+                    , { field: 'organization', title: '工作单位及职务', minwidth: 150, align: 'center' }
+                    , { field: 'phoneNumber', title: '手机号码', width: 120, align: 'center' }
+                    , { fixed: 'right', title: '操作', toolbar: '#bar', width: 150, align: 'center' }
+                ]]
+                , page: true,
+                parseData: function(res){
+                    return {
+                        "code": 0,
+                        "msg": res.header.message,
+                        "count": res.body.count,
+                        "data": res.body.result
+                    };
+                },
+                done: function (res, curr, count) { }
+            });
+        }
+
+        table.on('tool(sumTbl)', function (obj) {
+            var data = obj.data;
+            storage.setItem('time_search_user_id', data.user_id);
+            personSumTbl(data.user_id);
+            if (obj.event === 'detail') {
+                layer.open({
+                        type: 1,
+                        area: ['1000px', '600px'],
+                        title: '个人总结表单',
+                        content: $("#personSum"),
+                        shade: 0,
+                    })
+                table.resize('personSumTbl');
+            } 
+        });
+
+        function personSumTbl(user_id){
+            table.render({
+                elem: "#personSumTbl",
+                url: 'http://127.0.0.1:8090/api/getAllSummary',
+                method: 'POST',
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                where: {
+                    'user_id': user_id,
+                }
+                , title: '计划表'
+                , cols: [[
+                    { title: '序号', width: 50, type: 'numbers' }
+                    , { field: 'time', title: '总结周期', width: 150, align: 'center' }
+                    , { field: 'summary_id', title: 'id', hide:true}
+                    , { field: 'title', title: '总结标题', minwidth: 120, align: 'center' }
+                    , { field: 'submit_time', title: '提交时间', minwidth: 150, align: 'center' }
+                    , { fixed: 'right', title: '操作', toolbar: '#lookSum', width: 150, align: 'center' }
+                ]]
+                , page: true,
+                parseData: function (res) {
+                    return {
+                        "code": 0,
+                        "msg": res.header.message,
+                        "count": res.body.count,
+                        "data": res.body.summarys
+                    };
+                },
+                done: function (res, curr, count) { }
+            });
+        }
+
+        function getSummaryInfo(summary_id){
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8090/api/getSummaryById",
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({
+                    'summary_id': summary_id
+                }),
+                success: function (data) {
+                    $("#title").val(data.body.title);
+                    $("#submit_time").val(data.body.createTime);
+                    $("#content").val(data.body.text);
+                }
+            });
+        }
+
+        form.on('submit(time_search)', function(data){
+            table.render({
+                elem: "#personSumTbl",
+                url: 'http://127.0.0.1:8090/api/getSummaryByUserIdAndTimeLimit',
+                method: 'POST',
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                where: {
+                    'user_id': parseInt(storage.getItem('time_search_user_id')),
+                    'time_limit': data.field.sum
+                }
+                , title: '计划表'
+                , cols: [[
+                    { title: '序号', width: 50, type: 'numbers' }
+                    , { field: 'time', title: '计划周期', width: 150, align: 'center' }
+                    , { field: 'summary_id', title: 'id', hide:true}
+                    , { field: 'title', title: '计划标题', minwidth: 120, align: 'center' }
+                    , { field: 'submit_time', title: '提交时间', minwidth: 150, align: 'center' }
+                    , { fixed: 'right', title: '操作', toolbar: '#lookSum', width: 150, align: 'center' }
+                ]]
+                , page: true,
+                parseData: function (res) {
+                    return {
+                        "code": 0,
+                        "msg": res.header.message,
+                        "count": res.body.count,
+                        "data": res.body.summarys
+                    };
+                },
+                done: function (res, curr, count) { }
+            });
+            return false;
+        });
+
+        form.on('submit(name_search)', function(data){
+            table.render({
+                elem: "#sumTbl",
+                toolbar: '#toolbar',
+                defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                    title: '提示'
+                    , layEvent: 'LAYTABLE_TIPS'
+                    , icon: 'layui-icon-tips'
+                }],
+                url: 'http://127.0.0.1:8090/api/getUserByOrganizationIdAndName',
+                method: 'POST',
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                where: {
+                    'user_id': parseInt(storage.getItem("user_id")),
+                    'organization_id': parseInt(storage.getItem("organization_id")),
+                    'is_organization': parseInt(storage.getItem("is_organization")),
+                    'name': data.field.name
+                },
+                title: '计划表'
+                , cols: [[
+                    { title: '序号', width: 50, type: 'numbers' }
+                    , { field: 'user_id', title: 'id', hide: true}
+                    , { field: 'name', title: '姓名', minwidth: 80, align: 'center' }
+                    , { field: 'sex', title: '性别', width: 100, align: 'center' }
+                    , { field: 'idNumber', title: '身份证号', minwidth: 120, align: 'center' }
+                    , { field: 'organization', title: '工作单位及职务', minwidth: 150, align: 'center' }
+                    , { field: 'phoneNumber', title: '手机号码', width: 120, align: 'center' }
+                    , { fixed: 'right', title: '操作', toolbar: '#bar', width: 150, align: 'center' }
+                ]]
+                , page: true,
+                parseData: function(res){
+                    return {
+                        "code": 0,
+                        "msg": res.header.message,
+                        "count": res.body.count,
+                        "data": res.body.result
+                    };
+                },
+                done: function (res, curr, count) { }
+            });
+            return false;
+        });
+
+        table.on('tool(personSumTbl)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'detailSum') {
+                getSummaryInfo(data.summary_id);
+                layer.open({
+                    type: 1,
+                    area: ['500px', '600px'],
+                    title: '总结详情',
+                    content: $("#sumContent"),
+                    shade: 0,
+                })
+            } 
+        });
+
+        table.on('toolbar(sumTbl)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'downloadSum') {
+                layer.open({
+                    type: 1,
+                    area: ['500px', '400px'],
+                    title: '导出设置',
+                    content: $("#setRequirement"),
+                    shade: 0,
+                    btn: ['导出', '取消']
+                    , btn1: function (index, layero) {
+                        window.location.href="http://localhost:8090/api/exportSummaryExcelFile?" + "name=" + $("#export_name").val() + "&organization_id=" + parseInt(storage.getItem('organization_id')) + "&is_organization=" + parseInt(storage.getItem("is_organization")) + "&time_limit=" + $("#date1").val(),
+                        layer.closeAll();
+                    },
+                    btn2: function (index, layero) {
+                        layer.closeAll();
+                    },
+                })
+            } 
+        });
+    })
+</script>
+
+
+<script type="text/html" id="bar">
+    <a class="layui-btn layui-btn-xs layui-btn-normal"lay-event="detail">查看总结</a>
+</script>
+
+<script type="text/html" id="toolbar">
+    <a class="layui-btn layui-btn-bg layui-btn-normal"lay-event="downloadSum">导出总结</a>
+</script>
+
+<script type="text/html" id="lookSum">
+    <a class="layui-btn layui-btn-xs" lay-event="detailSum">总结详情</a>
+</script>
+
+<script src="/management/ogTree.js"></script>

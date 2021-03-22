@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>单位考核管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="/ok-admin/css/oksub.css" media="all" />
+    <script src="/ok-admin/lib/layui/layui.js"></script>
+    <style>
+        .layui-btn-group {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ok-body">
+        <div class="layui-row">
+            <div class="layui-col-md4">
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                    <legend>机构树</legend>
+                </fieldset>
+                <div style="padding: 10px; border: 1px solid #ddd; height:600px;width:250px;margin-right: 40px;">
+                    <ul id="ogTree"></ul>
+                </div>
+
+            </div>
+            <div class="layui-col-md8">
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                    <legend>单位考核设置</legend>
+                </fieldset>
+                <form class="layui-form layui-form-pane" action="" lay-filter="example" style="width:80%;">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">单位名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="username" lay-verify="title" autocomplete="off" value="杭州市萧山区组织部"
+                                class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">单位范围</label>
+                        <div class="layui-input-block">
+                            <div placeholder="" class="layui-textarea" disabled>
+                                <div class="layui-btn-group">
+                                    <a class="layui-btn layui-btn-xs layui-btn-normal">杭州师范大学杭州师范大学杭州师范大学</a>
+                                    <a class="layui-btn layui-btn-xs layui-bg-red"><i
+                                            class="layui-icon layui-icon-delete"></i></a>
+                                </div>
+                                <div class="layui-btn-group">
+                                    <a class="layui-btn layui-btn-xs layui-btn-normal">杭州师范大学</a>
+                                    <a class="layui-btn layui-btn-xs layui-bg-red"><i
+                                            class="layui-icon layui-icon-delete"></i></a>
+                                </div>
+                                <div class="layui-btn-group">
+                                    <a class="layui-btn layui-btn-xs layui-btn-normal">杭州师范大学杭州师范大学</a>
+                                    <a class="layui-btn layui-btn-xs layui-bg-red"><i
+                                            class="layui-icon layui-icon-delete"></i></a>
+                                </div>
+                                <div class="layui-btn-group">
+                                    <a class="layui-btn layui-btn-xs layui-btn-normal">杭州师范大学</a>
+                                    <a class="layui-btn layui-btn-xs layui-bg-red"><i
+                                            class="layui-icon layui-icon-delete"></i></a>
+                                </div>
+                                <div class="layui-btn-group">
+                                    <a class="layui-btn layui-btn-xs layui-btn-normal">杭州师范大学</a>
+                                    <a class="layui-btn layui-btn-xs layui-bg-red"><i
+                                            class="layui-icon layui-icon-delete"></i></a>
+                                </div>
+                                <div class="layui-btn-group">
+                                    <a class="layui-btn layui-btn-xs layui-btn-normal">杭州师范大学</a>
+                                    <a class="layui-btn layui-btn-xs layui-bg-red"><i
+                                            class="layui-icon layui-icon-delete"></i></a>
+                                </div>
+                                <div class="layui-btn-group">
+                                    <a class="layui-btn layui-btn-xs layui-btn-normal">杭州师范大学sasfkh</a>
+                                    <a class="layui-btn layui-btn-xs layui-bg-red"><i
+                                            class="layui-icon layui-icon-delete"></i></a>
+                                </div>
+                                <div class="layui-btn-group">
+                                    <a class="layui-btn layui-btn-xs layui-btn-normal">杭州师范大学</a>
+                                    <a class="layui-btn layui-btn-xs layui-bg-red"><i
+                                            class="layui-icon layui-icon-delete"></i></a>
+                                </div>
+                                <div class="layui-btn-group">
+                                    <a class="layui-btn layui-btn-xs layui-btn-normal">杭州师范大学</a>
+                                    <a class="layui-btn layui-btn-xs layui-bg-red"><i
+                                            class="layui-icon layui-icon-delete"></i></a>
+                                </div>
+                                <div class="layui-btn-group">
+                                    <a class="layui-btn layui-btn-xs layui-btn-normal">杭州师范大学</a>
+                                    <a class="layui-btn layui-btn-xs layui-bg-red"><i
+                                            class="layui-icon layui-icon-delete"></i></a>
+                                </div>
+                                <div class="layui-btn-group">
+                                    <a class="layui-btn layui-btn-xs layui-btn-normal">杭州师范大学</a>
+                                    <a class="layui-btn layui-btn-xs layui-bg-red"><i
+                                            class="layui-icon layui-icon-delete"></i></a>
+                                </div>
+                                <div class="layui-btn-group">
+                                    <a class="layui-btn layui-btn-xs layui-btn-normal">杭州师范大学</a>
+                                    <a class="layui-btn layui-btn-xs layui-bg-red"><i
+                                            class="layui-icon layui-icon-delete"></i></a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <a class="layui-btn" id="addOrgonation">添加单位</a>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">我的工作</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="" title="计划" checked disabled>
+                            <input type="checkbox" name="" title="总结" checked="" disabled>
+                            <input type="checkbox" name="" title="晒绩" checked disabled>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">参与考核</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="" title="是" checked>
+                            <input type="radio" name="" title="否">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item" pane="">
+                        <label class="layui-form-label">考察周期</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="" title="季度" checked>
+                            <input type="radio" name="" title="月">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <button class="layui-btn">保存设置</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+
+
+<form class="layui-form" id="addOgArea" style="display:none;margin:30px;">
+    <div class="layui-input-inline">
+        <input name="" type="text" class="layui-input" placeholder="单位名称" autocomplete="off">
+    </div>
+    <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="search">
+        <i class="layui-icon">&#xe615;</i>
+    </button>
+    <table class="layui-hide" id="organizationTbl" lay-filter="smallinfoTbl" style=""></table>
+</form>
+<!-- 表单结束 -->
+
+</html>
+
+<script>
+    layui.use(["table", "element", "form", "laydate", "laytpl", "tree", "layer"], function () {
+        var form = layui.form
+            , table = layui.table
+            , element = layui.element
+            , laydate = layui.laydate
+            , layer = layui.layer
+            , laytpl = layui.laytpl
+            , tree = layui.tree
+            , $ = layui.jquery;
+
+        var organizationTbl = table.render({
+            elem: "#organizationTbl"
+            , data: [{ name: 'xxxxxxxx', time: '季度', assessObj: '普通公务员', isUse: '是' }]
+            , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                , layEvent: 'LAYTABLE_TIPS'
+                , icon: 'layui-icon-tips'
+            }]
+            , title: '用户数据表'
+            , cols: [[
+                { type: 'checkbox' }
+                , { title: '序号', width: 50, type: 'numbers' }
+                , { field: 'ogName', title: '单位名称', minWidth: 120, edit: 'text', align: 'center' }
+            ]]
+            , page: true,
+            done: function (res, curr, count) { }
+        });
+
+        layui.$('#addOrgonation').on('click', function () {
+            layer.open({
+                type: 1,
+                area: ['800px', '600px'],
+                title: '添加单位',
+                content: $("#addOgArea"),
+                shade: 0,
+                btn: ['确认', '取消']
+                , btn1: function (index, layero) {
+                    alert(加入成功);
+                    layer.closeAll();
+                },
+                btn2: function (index, layero) {
+                    layer.closeAll();
+                },
+
+            })
+            table.resize("organizationTbl");
+        });
+
+
+    })
+</script>
+
+<script src="/management/ogTree.js"></script>

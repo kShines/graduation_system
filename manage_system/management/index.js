@@ -5,7 +5,7 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu"], 
     var $ = layui.jquery;
     var layer = layui.layer;
     var okLayer = layui.okLayer;
-
+console.log("111");
     // 获取输入人员信息
     $("#name").val()
 

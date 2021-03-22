@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>个人考核管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="/ok-admin/css/oksub.css" media="all" />
+    <script src="/ok-admin/lib/layui/layui.js"></script>
+</head>
+
+<body>
+    <div class="ok-body">
+        <div class="layui-row">
+            <div class="layui-col-md3">
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                    <legend>机构树</legend>
+                </fieldset>
+                <div style="padding: 10px; border: 1px solid #ddd; height:600px;width:250px;margin-right: 20px;">
+                    <ul id="ogTree"></ul>
+                </div>
+
+            </div>
+            <div class="layui-col-md9">
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                    <legend>考核批次</legend>
+                </fieldset>
+                <form class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <div class="layui-input-inline">
+                                    <input name="title" type="text" class="layui-input" placeholder="考核批次标题" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="layui-inline">
+                            <div class="">
+                                <button class="layui-btn" lay-submit="" lay-filter="title_search">
+                                    <i class="layui-icon">&#xe615;</i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="layui-inline">
+                            <div class="">
+                                <a id = "download_user_grade" href = "" class="layui-btn" lay-filter="download_user_grade">
+                                    <i class="layui-icon">成绩下载</i>
+                                </a>
+                                <span id="download_user_grade_text" style="color:gray;">下载当前单位考核成绩(当前单位为:)</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <table class="layui-hide" id="batchTbl" lay-filter="batchTbl"></table>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+
+
+<form class="layui-form" id="assessContent"  style="display:none;margin:30px;">
+    <table class="layui-hide" id="batchAssess" lay-filter="batchAssess" ></table>
+</form>
+<!-- 表单结束 -->
+
+
+</html>
+
+<script>
+    layui.use(["table", "element", "form", "laydate", "laytpl", "tree", "layer","upload"], function () {
+        var form = layui.form
+            , table = layui.table
+            , element = layui.element
+            , laydate = layui.laydate
+            , layer = layui.layer
+            , laytpl = layui.laytpl
+            , tree = layui.tree
+            , upload = layui.upload
+            , $ = layui.jquery;
+
+        var storage = window.localStorage;
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8090/api/getOrganizationTreeByUserId",
+            dataType: 'json',
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({
+                'user_id': parseInt(storage.getItem('user_id'))
+            }),
+            success: function (data) {
+                layui.use('tree', function () {
+                    var tree = layui.tree;
+                    tree.render({
+                        elem: '#ogTree', 
+                        contentType: 'application/json',
+                        data: data.body,
+                        click: function(item){
+                            $('#download_user_grade_text').html("下载当前单位考核成绩(当前单位为:"+ item.data.title +")");
+                            storage.setItem("organization_id", item.data.id);
+                            storage.setItem("organization_title", item.data.title);
+                            storage.setItem("organization_node_type", item.data.node_type);
+                            $("#download_organization").val(item.data.title);
+                            if(item.data.node_type == 'organization'){
+                                $('#download_user_grade').attr('href',"http://localhost:8090/api/downloadUserGrade?" + "organization_id=" + item.data.id + "&is_organization=1");
+                                storage.setItem("is_organization", 1);
+                                adminAssessBatchList(item.data.node_type, item.data.id, 1);
+                            }else{
+                                $('#download_user_grade').attr('href',"http://localhost:8090/api/downloadUserGrade?" + "organization_id=" + item.data.id + "&is_organization=0"); 
+                                storage.setItem("is_organization", 0);
+                                adminAssessBatchList(item.data.node_type, item.data.id, 0);
+                            }
+                        }
+                    })
+                })
+            }
+        });
+
+        function adminAssessBatchList(node_type, organization_id, is_organization){
+            table.render({
+                elem: "#batchTbl",
+                url: 'http://127.0.0.1:8090/api/getAdminAssessBatchByOrganizationId',
+                method: 'POST',
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                where: {
+                    'organization_id': organization_id,
+                    'is_organization': is_organization
+                }
+                , title: '用户数据表'
+                , cols: [[
+                    { title: '序号', width: 50, type: 'numbers' }
+                    , { field: 'assess_group_name', title: '考核组名称', minwidth: 120, align: 'center' }
+                    , { field: 'assess_batch_id', hide:'true'}
+                    , { field: 'time', title: '考核周期', width: 150, align: 'center' }
+                    , { field: 'assess_batch_name', title: '考核批次名称', minwidth: 120, align: 'center' }
+                    , { field: 'batch_result', title:'优秀率/考核组人数', align: 'center'}
+                    , { fixed: 'right', title: '操作', toolbar: '#bar', width: 150, align: 'center'  }
+                ]]
+                , page: true,
+                parseData: function(res){
+                    return{
+                        "code": 0,
+                        "msg": res.header.message,
+                        "count": res.body.count,
+                        "data": res.body.assess_batch
+                    };
+                },
+                done: function (res, curr, count) { }
+            });
+        }
+
+        form.on('submit(title_search)', function(data){
+            table.render({
+                elem: "#batchTbl",
+                url: 'http://127.0.0.1:8090/api/getAssessBatchByOrganizationIdAndTitle',
+                method: 'POST',
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                where: {
+                    'organization_id': parseInt(storage.getItem("organization_id")),
+                    'is_organization': parseInt(storage.getItem("is_organization")),
+                    'title': data.field.title
+                }
+                , title: '用户数据表'
+                , cols: [[
+                    { title: '序号', width: 50, type: 'numbers' }
+                    , { field: 'assess_group_name', title: '考核组名称', minwidth: 120, align: 'center' }
+                    , { field: 'assess_batch_id', hide:'true'}
+                    , { field: 'time', title: '考核周期', width: 150, align: 'center' }
+                    , { field: 'assess_batch_name', title: '考核批次名称', minwidth: 120, align: 'center' }
+                    , { field: 'batch_result', title:'优秀率/考核组人数', align: 'center'}
+                    , { fixed: 'right', title: '操作', toolbar: '#bar', width: 150, align: 'center'  }
+                ]]
+                , page: true,
+                parseData: function(res){
+                    return{
+                        "code": 0,
+                        "msg": res.header.message,
+                        "count": res.body.count,
+                        "data": res.body.assess_batch
+                    };
+                },
+                done: function (res, curr, count) { }
+            });
+            return false;
+        });
+
+        table.on('tool(batchTbl)', function (obj) {
+            var data = obj.data;
+            console.log(data);
+            if (obj.event === 'assessBacth') {
+                getAssessBatchInfo(data.assess_batch_id);
+                layer.open({
+                    type: 1,
+                    area: ['1200px', '600px'],
+                    title: '人员考核等次',
+                    content: $("#assessContent"),
+                    shade: 0,
+                    btn: ['确认', '取消']
+                    , btn1: function (index, layero) {
+                        if(toString.call(table.cache['batchAssess'][0]) != "[object Array]"){
+                            $.ajax({
+                                type: "POST",
+                                url: "http://localhost:8090/api/updateUserGradeByIdList",
+                                dataType: 'json',
+                                contentType: "application/json;charset=utf-8",
+                                data: JSON.stringify({
+                                    'user_grade_info': table.cache['batchAssess']
+                                }),
+                                success: function (data) {
+                                    layer.msg("修改成功!");
+                                }
+                            });
+                        }
+                        adminAssessBatchList(storage.getItem("organization_node_type"),parseInt(storage.getItem("organization_id")),parseInt(storage.getItem("is_organization")));
+                        layer.closeAll();
+                    },
+                    btn2: function (index, layero) {
+                        adminAssessBatchList(storage.getItem("organization_node_type"),parseInt(storage.getItem("organization_id")),parseInt(storage.getItem("is_organization")));
+                        layer.closeAll();
+                    },
+                });
+                table.resize('batchAssess');
+            }
+        });
+
+        function getAssessBatchInfo(assess_batch_id){
+            table.render({
+                elem: "#batchAssess",
+                toolbar: '#toolbar',
+                url: 'http://127.0.0.1:8090/api/getUserGradeByAssessBatchId',
+                method: 'POST',
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                where: {
+                    'assess_batch_id': assess_batch_id,
+                }
+                , title: '用户数据表'
+                , cols: [[
+                    { title: '序号', width: 50, type: 'numbers' }
+                    , { field: 'name', title: '姓名', minwidth: 80, align: 'center' }
+                    , { field: 'grade_id', hide:true}
+                    , { field: 'idNumber', title: '身份证号', minwidth: 120, align: 'center' }
+                    , { field: 'grade_rank', title:'最终等次', minWidth: 100, edit: 'true', align: 'center', style: 'color:red;'}
+                    , { fixed: 'right', title: '操作', toolbar: '#bar2', minWidth: 100, align: 'center' }
+                ]]
+                , page: true,
+                parseData: function(res){
+                    return{
+                        "code": 0,
+                        "msg": res.header.message,
+                        "count": res.body.count,
+                        "data": res.body.grades
+                    };
+                },
+                done: function (res, curr, count) { 
+                    upload.render({
+                        elem: '#test3',
+                        method: "POST",
+                        url: 'http://127.0.0.1:8090/api/uploadUserGrade',
+                        data: {
+                            'assess_batch_id': assess_batch_id
+                        },
+                        accept: 'file'
+                        ,done: function(res){
+                            if(res.body.length == 0){
+                                layer.msg('上传成功');
+                                getAssessBatchInfo(assess_batch_id);
+                            } else {
+                                var isNotExistUserName = "";
+                                for(var i = 0;i < res.body.length; ++i){
+                                    if(i == 0){
+                                        isNotExistUserName = isNotExistUserName + "[" + res.body[i]['name'] + "," + res.body[i]['username'] + "]";
+                                    } else {
+                                        isNotExistUserName = isNotExistUserName + ",[" + res.body[i]['name'] + "," + res.body[i]['username'] + "]";
+                                    }
+                                }
+                                alert('以下用户的账号不存在:' + isNotExistUserName);
+                                getAssessBatchInfo(assess_batch_id);
+                                layer.msg('部分上传成功');
+                            }
+                            adminAssessBatchList(storage.getItem("organization_node_type"),parseInt(storage.getItem("organization_id")),parseInt(storage.getItem("is_organization")));
+                            // console.log(res);
+                        }
+                    });
+                }
+            });
+        }
+        table.on('tool(batchAssess)', function(obj){
+            var data = obj.data;
+            // console.log(data);
+            if(obj.event === 'del'){
+              layer.confirm('真的删除该成绩吗？', function(index){
+                deleteUserGradeById(data.grade_id);
+                obj.del();
+                layer.close(index);
+              });
+            }
+        });
+        function deleteUserGradeById(user_grade_id){
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8090/api/deleteUserGradeById",
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({
+                    'grade_id': user_grade_id
+                }),
+                success: function (data) {
+                    
+                    layer.msg("删除成功!");
+                }
+            });
+            return false;
+        }
+
+    })
+</script>
+
+<script type="text/html" id="toolbar">
+    <a href = "../resource/成绩导入模板.xlsx" class="layui-btn layui-btn layui-btn-normal" lay-event="" download>下载考核模版</a>
+    <button type="button" class="layui-btn layui-btn-bg layui-btn-warm" id="test3"><i class="layui-icon"></i>上传考核成绩</button>
+</script>
+
+<script type="text/html" id="bar">
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="assessBacth">考核</a>
+</script>
+
+<script type="text/html" id="bar2">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script src="/management/ogTree.js"></script>
