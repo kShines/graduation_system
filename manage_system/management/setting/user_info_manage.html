@@ -380,8 +380,6 @@
                         btn: ['确认', '取消']
                         , btn1: function (index, layero) {
                             newNormalUser();
-                            alert("添加成功");
-                            adminOrganization(storage.getItem("organization_node_type"), parseInt(storage.getItem("organization_id")), storage.getItem("organization_title"));
                             layer.closeAll();
                         },
                         btn2: function (index, layero) {
@@ -480,10 +478,12 @@
         }
 
         function newNormalUser(){
+            
             $.ajax({
                 type: "POST",
                 url: "http://localhost:8090/api/createUser",
                 dataType: 'json',
+                async:true,
                 contentType: "application/json;charset=utf-8",
                 data: JSON.stringify({
                     'organization_id': parseInt(storage.getItem('organization_id')),
@@ -499,9 +499,19 @@
                     "assess_position": $("#new_admin_assess_position").val(),
                     "is_assess": parseInt($("#new_admin_is_assess").val())
                 }),
-                success: function(){
-                    adminOrganization(storage.getItem("organization_node_type"),parseInt(storage.getItem("organization_id")),storage.getItem("organization_title"));
-                }
+                success: function(rs){
+                    console.log(rs.header.message);
+                    if(rs.header.message == "success"){
+                        alert("添加成功");
+                        adminOrganization(storage.getItem("organization_node_type"), parseInt(storage.getItem("organization_id")), storage.getItem("organization_title"));
+                    }else{
+                        alert("添加失败，用户名已经存在")
+                    }
+                },
+                error:function(rs){
+                    alert("添加失败，缺少信息")
+			    }
+                
             });
         };
     })

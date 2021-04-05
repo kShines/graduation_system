@@ -172,6 +172,7 @@
     
         var storage = window.localStorage;
         function getOrganizationTreeByUserId(){
+            console.log("1");
             $.ajax({
                 type: "POST",
                 url: "http://localhost:8090/api/getOrganizationTreeByUserId",
@@ -252,6 +253,7 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function(data){
+                console.log(2);
                 data = data.body;
                 console.log(data);
                 for(var i = 0;i < data.organizations.length; ++i){

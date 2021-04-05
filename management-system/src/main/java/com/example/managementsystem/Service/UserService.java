@@ -104,6 +104,7 @@ public class UserService {
                     if(user.getAdminAssessGroup().equals("") && user.getAdminOrganization().equals("")){
                         return new ResultInfo(200, "该用户不是管理员", result);
                     }
+
                     result.put("state", 1);
                     result.put("name", user.getName());
                     result.put("user_id", user.getUser_id());

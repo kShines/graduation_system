@@ -40,12 +40,18 @@ public class UserGradeService {
     private OrganizationDAO organizationDAO;
 
     public ResultInfo getLatestGrade(int userId, int page, int limit){
+        Map<String, Object> result = new HashMap<>();
         UserPO user = userDAO.getUserById(userId).get(0);
         int groupId = user.getAssessGroupId();
         List<AssessBatchPO> assessBatches = assessBatchDAO.getLatestAssessBatchByGroupId(groupId);
+        System.out.println("debug: "+assessBatches.size());
+        if(assessBatches.size()==0){
+            return new ResultInfo(200,"success",result);
+        }
         int assessBatchId = assessBatches.get(0).getAssess_batch_id();
         List<UserGradePO>userGrades = userGradeDAO.getUserGradeByAssessBatchId(assessBatchId);
-        Map<String, Object> result = new HashMap<>();
+
+
         List<Map<String, Object>> tempList = new ArrayList<>();
         int index = 0;
         for(int i = (page - 1) * limit;i < min(page * limit, userGrades.size()); ++i){

@@ -61,4 +61,6 @@ public class UserPO {
 
     @Column(name="assess_position")
     String assessPosition;
+
+
 }

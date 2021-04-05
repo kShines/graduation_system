@@ -50,6 +50,7 @@ public class OrganizationDAOImpl implements OrganizationDAO {
             if(adminOrganizationStr[i].equals(""))continue;
             if(parseInt(adminOrganizationStr[i]) == nowOrganizationId){
                 result.add(nowOrganizationId);
+
                 return result;
             }
         }

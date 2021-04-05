@@ -133,6 +133,7 @@ public class UserController {
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ResultInfo uploadFile(MultipartFile file, int organization_id, int is_organization) {
+        System.out.println(organization_id+"  "+is_organization);
         return userService.uploadUser(
                 file,
                 organization_id,
